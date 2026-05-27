@@ -8,7 +8,6 @@ interface DropZoneProps {
     fileId: string;
     filePath: string;
     updatedAt: Date;
-    versionId?: string;
   } | null;
   selectedFile: File | null;
   onFileChange: (file: File | null) => void;

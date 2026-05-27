@@ -40,12 +40,10 @@ const useUpload = () => {
     file,
     username,
     prevImageId,
-    versionId,
   }: {
     file: File | null;
     username: string;
     prevImageId?: string;
-    versionId?: string;
   }): Promise<ApiResponse> => {
     // Access the file input element using the ref
     if (!file) {
@@ -108,9 +106,9 @@ const useUpload = () => {
       });
       console.log("Upload response:", uploadResponse);
 
-      const { fileId, filePath, versionInfo } = uploadResponse;
+      const { fileId, filePath } = uploadResponse;
 
-      if (!uploadResponse || !fileId || !filePath || !versionInfo?.id) {
+      if (!uploadResponse || !fileId || !filePath) {
         return {
           success: false,
           message: "Upload failed",
@@ -124,7 +122,6 @@ const useUpload = () => {
           fileId: fileId,
           filePath: filePath,
           updatedAt: new Date(),
-          versionId: versionInfo.id,
         },
       };
     } catch (error) {

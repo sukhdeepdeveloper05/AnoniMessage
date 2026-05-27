@@ -10,7 +10,6 @@ declare module "next-auth" {
       avatar?: {
         fileId: string;
         filePath: string;
-        versionId: string;
         updatedAt?: Date | string;
       } | null;
     } & DefaultSession["user"];
@@ -24,7 +23,6 @@ declare module "next-auth" {
     avatar?: {
       fileId: string;
       filePath: string;
-      versionId: string;
       updatedAt?: Date | string;
     } | null;
   }

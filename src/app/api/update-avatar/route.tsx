@@ -8,7 +8,6 @@ interface Avatar {
   fileId: string;
   filePath: string;
   updatedAt: Date;
-  versionId: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -33,11 +32,11 @@ export async function POST(request: NextRequest) {
       avatar: Avatar;
     } = await request.json();
 
-    if (!avatar.fileId || !avatar.filePath || !avatar.versionId) {
+    if (!avatar.fileId || !avatar.filePath) {
       return NextResponse.json(
         {
           success: false,
-          message: "fileId, filePath, and versionId are required",
+          message: "fileId and filePath are required",
         },
         { status: 400 },
       );
@@ -47,7 +46,6 @@ export async function POST(request: NextRequest) {
       avatar: {
         fileId: avatar.fileId,
         filePath: avatar.filePath,
-        versionId: avatar.versionId,
         updatedAt: new Date(avatar.updatedAt),
       },
     });

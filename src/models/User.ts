@@ -46,10 +46,6 @@ const userSchema = new Schema<User>({
       type: Date,
       default: Date.now,
     },
-    versionId: {
-      type: String,
-      required: [true, "Version ID is required"],
-    },
   },
   isVerified: {
     type: Boolean,

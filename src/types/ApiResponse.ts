@@ -8,7 +8,6 @@ export interface ApiResponse {
   avatar?: {
     fileId: string;
     filePath: string;
-    versionId: string;
     updatedAt: Date;
   };
   pagination?: {

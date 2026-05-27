@@ -14,7 +14,6 @@ export interface User extends Document {
     fileId: string;
     filePath: string;
     updatedAt: Date;
-    versionId: string;
   };
   isVerified: boolean;
   verifyCode: string;
