@@ -30,7 +30,9 @@ export default function DashboardPage() {
   const page = searchParams.get("page") || "1";
   const limit = searchParams.get("limit") || "8";
 
-  const { session } = useSessionStore();
+  const { session, status } = useSessionStore();
+
+  if (!session) return null;
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -47,10 +49,10 @@ export default function DashboardPage() {
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex flex-col items-end text-right">
               <span className="text-sm font-semibold tracking-tight leading-none mb-0.5">
-                {session?.user?.name || session?.user?.username}
+                {session.user.name || session.user.username}
               </span>
               <span className="text-xs text-muted-foreground font-mono">
-                @{session?.user?.username}
+                @{session.user.username}
               </span>
             </div>
             <Button

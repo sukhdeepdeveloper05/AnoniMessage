@@ -145,8 +145,6 @@ function SignUpForm({
     }
   }, [debounceUsername]);
 
-  console.log("imageUrl: ", imageUrl);
-
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     try {
       const res = await axios.post<ApiResponse>("/api/sign-up", {

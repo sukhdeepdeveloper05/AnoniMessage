@@ -1,5 +1,5 @@
-import { resend } from "@/lib/resend";
-import VerificationEmail from "@/components/verification-email-template";
+import { emailjs, getEmailJsConfig } from "@/lib/emailjs";
+import { EmailJSResponseStatus } from "@emailjs/nodejs";
 import { ApiResponse } from "@/types/ApiResponse";
 
 export const sendVerificationEmail = async (
@@ -8,15 +8,41 @@ export const sendVerificationEmail = async (
   verifyCode: string
 ): Promise<ApiResponse> => {
   try {
-    await resend.emails.send({
-      from: "Anonimessage <onboarding@resend.dev>",
-      to: email,
-      subject: "AnoniMessage | Verification Code",
-      react: VerificationEmail({ username, otp: verifyCode }),
-    });
+    const { publicKey, privateKey, serviceId, templateId } =
+      getEmailJsConfig();
+
+    const response = await emailjs.send(
+      serviceId,
+      templateId,
+      {
+        email,
+        username,
+        code: verifyCode,
+        expiry_time: new Date().toLocaleString(),
+        platform: "AnoniMessage",
+        subject: "AnoniMessage | Verification Code",
+      },
+      { publicKey, privateKey }
+    );
+
+    console.log(response);
 
     return { success: true, message: "Verification email sent successfully" };
   } catch (error) {
+    if (error instanceof EmailJSResponseStatus) {
+      console.error("Error sending verification email", error);
+
+      if (error.text.includes("non-browser")) {
+        return {
+          success: false,
+          message:
+            "EmailJS server access is disabled. Enable 'Allow EmailJS API for non-browser applications' at https://dashboard.emailjs.com/admin/account/security",
+        };
+      }
+
+      return { success: false, message: error.text };
+    }
+
     console.error("Error sending verification email", error);
     return { success: false, message: "Failed to send verification email" };
   }

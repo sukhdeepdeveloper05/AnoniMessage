@@ -36,8 +36,8 @@ export default async function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body>
-        <NextAuthProvider>
-          <SessionProvider session={session}>
+        <NextAuthProvider session={session}>
+          <SessionProvider>
             <Toaster position="top-right" duration={3000} richColors />
             {children}
           </SessionProvider>

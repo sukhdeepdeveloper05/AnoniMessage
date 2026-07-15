@@ -1,4 +1,3 @@
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
@@ -43,7 +42,15 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Incorrect password");
         }
 
-        return user;
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.username,
+          username: user.username,
+          isVerified: user.isVerified,
+          isAcceptingMessages: user.isAcceptingMessages,
+          avatar: user.avatar,
+        };
       },
     }),
   ],
@@ -72,8 +79,9 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, trigger, session, user }: any) {
       if (user) {
-        token._id = user._id?.toString();
+        token._id = user._id?.toString() ?? user.id;
         token.username = user.username;
+        token.name = user.name ?? user.username;
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.avatar = user.avatar;

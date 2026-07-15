@@ -21,7 +21,6 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import { signIn } from "next-auth/react";
 
 const verifySchema = z.object({

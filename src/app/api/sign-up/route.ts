@@ -115,6 +115,8 @@ export async function POST(request: Request) {
         userFields.avatar = avatar;
       }
 
+      console.log(userFields)
+
       await UserModel.create(userFields);
     }
 

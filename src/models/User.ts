@@ -1,4 +1,4 @@
-import type { Message, User } from "@/types/User";
+import type { Avatar, Message, User } from "@/types/User";
 import mongoose, { Schema } from "mongoose";
 
 const messageSchema = new Schema<Message>({
@@ -6,11 +6,19 @@ const messageSchema = new Schema<Message>({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  
+},{ timestamps: true });
+
+const avatarSchema = new Schema<Avatar>({
+  fileId: {
+    type: String,
+    required: [true, "File ID is required"],
   },
-});
+  filePath: {
+    type: String,
+    required: [true, "File path is required"],
+  },
+}, { timestamps: true });
 
 const userSchema = new Schema<User>({
   username: {
@@ -33,20 +41,7 @@ const userSchema = new Schema<User>({
     type: String,
     required: [true, "Password is required"],
   },
-  avatar: {
-    fileId: {
-      type: String,
-      required: [true, "File ID is required"],
-    },
-    filePath: {
-      type: String,
-      required: [true, "File path is required"],
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
-  },
+    avatar: { type: avatarSchema, default: null },
   isVerified: {
     type: Boolean,
     default: false,
@@ -67,15 +62,7 @@ const userSchema = new Schema<User>({
     type: [messageSchema],
     default: [],
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}, { timestamps: true });
 
 // Check if model already exists to prevent OverwriteModelError
 const UserModel =

@@ -32,6 +32,9 @@ const DropZone = ({ avatar, selectedFile, onFileChange }: DropZoneProps) => {
     className: "rounded-full object-cover size-full",
   };
 
+  console.log(selectedFile, "selectedFile");
+  console.log(avatar, "avatar");
+
   return (
     <div
       className={cn(

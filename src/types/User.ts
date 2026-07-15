@@ -5,6 +5,11 @@ export interface Message extends Document {
   createdAt: Date;
 }
 
+export interface Avatar extends Document {
+  fileId: string;
+  filePath: string;
+  updatedAt: Date;
+}
 export interface User extends Document {
   username: string;
   email: string;
